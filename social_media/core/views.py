@@ -42,6 +42,21 @@ def like_post(request):
 
 
 @login_required(login_url="signin")
+def profile(request, pk):
+    user_object = User.objects.get(username=pk)
+    user_profile = Profile.objects.get(user=user_object)
+    user_posts = Post.objects.filter(user=pk)
+    user_post_length = len(user_posts)
+    context = {
+        'user_object': user_object,
+        'user_profile': user_profile,
+        'user_posts': user_posts,
+        'user_post_length': user_post_length
+    }
+    return render(request, 'profile.html', context)
+
+
+@login_required(login_url="signin")
 def upload(request):
     if request.method == 'POST':
         user = request.user.username
