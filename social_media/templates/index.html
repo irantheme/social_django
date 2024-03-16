@@ -21,36 +21,47 @@
 
             <header>
                 <div class="header_inner">
-                    <div class="left-side">
-                        <!-- Logo -->
-                        <div id="logo" class=" uk-hidden@s">
-                            <a href="home.html">
-                                <b><h1 style="text-transform: uppercase;">Social Book</h1></b>
-                            </a>
-                        </div>
 
-                        <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
-                            <i class="uil-bars"></i>
-                        </div>-->
-
-                        <div class="header_search">
-                            <input type="text" placeholder="Search for username..">
-                            <div class="icon-search">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
+                    <form action="/search" method="POST">
+                    {% csrf_token %}
+                        <div class="left-side">
+                            <!-- Logo -->
+                            <div id="logo" class=" uk-hidden@s">
+                                <a href="home.html">
+                                    <b><h1 style="text-transform: uppercase;">Social Book</h1></b>
+                                </a>
                             </div>
-                        </div>
 
-                    </div>
+                            <!--<div class="triger" uk-toggle="target: #wrapper ; cls: sidebar-active">
+                                <i class="uil-bars"></i>
+                            </div>-->
+
+                            <div class="header_search" style="display: flex;">
+                                <input type="text" name="username" placeholder="Search for username..">
+                                <button type="submit">
+                                    <div class="icon-search">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+
                     <div class="right-side lg:pr-4">
+                        <!-- welcome user -->
+                        <a href="#" class="">
+                            Welcome <b name="" class="">{{user.username}}&nbsp; &nbsp; &nbsp;</b>
+                        </a>
                          <!-- upload -->
                         <a href="#"
                             class="bg-pink-500 flex font-bold hidden hover:bg-pink-600 hover:text-white inline-block items-center lg:block max-h-10 mr-4 px-4 py-2 rounded shado text-white">
                             <ion-icon name="add-circle" class="-mb-1
-                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> Upload Pics
+                             mr-1 opacity-90 text-xl uilus-circle"></ion-icon> New Post
                         </a>
                          <!-- upload dropdown box -->
                         <div uk-dropdown="pos: top-right;mode:click ; animation: uk-animation-slide-bottom-small" class="header_dropdown">
