@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import Profile, Post, LikePost, FollowersCount
 from itertools import chain
+import random
 
 
 # Create your views here.
@@ -35,8 +36,39 @@ def index(request):
     # You can with feed_list, just display posts of following users in screen
     feed_list = list(chain(*feed))
 
+    # Get all posts
     posts = Post.objects.all()
-    return render(request, "index.html", {'user_profile': user_profile, 'posts': posts})
+
+    # User suggestion start
+    all_users = User.objects.all()
+    user_following_all = []
+
+    for user in user_following:
+        user_list = User.objects.get(username=user.user)
+        user_following_all.append(user_list)
+
+    new_suggestions_list = [x for x in list(
+        all_users) if (x not in list(user_following_all))]
+    current_user = User.objects.filter(username=request.user.username)
+
+    final_suggestions_list = [x for x in list(
+        new_suggestions_list) if (x not in list(current_user))]
+
+    random.shuffle(final_suggestions_list)
+
+    username_profile = []
+    username_profile_list = []
+
+    for users in final_suggestions_list:
+        username_profile.append(users.id)
+
+    for ids in username_profile:
+        profile_lists = Profile.objects.filter(id_user=ids)
+        username_profile_list.append(profile_lists)
+
+    suggestions_username_profile_list = list(chain(*username_profile_list))
+
+    return render(request, "index.html", {'user_profile': user_profile, 'posts': posts, 'suggestions_username_profile_list': suggestions_username_profile_list[:4]})
 
 
 @login_required(login_url="signin")
