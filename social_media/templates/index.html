@@ -249,10 +249,14 @@
                                       <li>
                                         <hr class="-mx-2 my-2 ">
                                       </li> -->
-                                      <li> 
-                                          <a href="#" class="flex items-center px-3 py-2 text-red-500 hover:bg-red-100 hover:text-red-500 rounded-md ">
-                                           <i class="uil-trash-alt mr-1"></i>  Delete
-                                          </a> 
+                                      <li>
+                                        <form method="POST" action="/delete" style="display: block;width:100%;text-align: left;">
+                                            <input type="hidden" name="post_id" value="{{ post.id }}">
+                                            <input type="hidden" name="user" value="{{ post.user }}">
+                                          <button type="submit" class="flex items-center px-3 py-2 text-red-500 hover:bg-red-100 hover:text-red-500 rounded-md" style="display: block;width:100%;text-align: left;">
+                                           <i class="uil-trash-alt mr-1"></i> Delete
+                                          </button>
+                                        </form>
                                       </li>
                                     </ul>
                                 
