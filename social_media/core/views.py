@@ -119,21 +119,24 @@ def like_post(request):
 
 @login_required(login_url="signin")
 def delete(request):
+    ''' Action delete for posts '''
+
+    # Get current user
     username = request.user.username
+    # Get post id sended
     post_id = request.POST.get('post_id')
 
-    # post = Post.objects.get(id=post_id)
-
+    # Get target post with user and id filter
     post_filter = Post.objects.filter(
         id=post_id, user=username).first()
 
+    # Check have post or no?
     if post_filter == None:
+        print('No access to deleting post!')
         return redirect('/')
     else:
-        pass
+        # Delete post
         post_filter.delete()
-        # post.no_of_likes = post.no_of_likes - 1
-        # post.save()
         return redirect('/')
 
 
