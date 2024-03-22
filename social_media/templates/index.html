@@ -222,10 +222,11 @@
                                     </a> -->
                                     <span class="block capitalize font-semibold "><a href="/profile/{{post.user}}">@{{post.user}}</a></span>
                                 </div>
+                              {% if post.user == user.username %}
                               <div>
                                 <a href="#"> <i class="icon-feather-more-horizontal text-2xl hover:bg-gray-200 rounded-full p-2 transition -mr-1 "></i> </a>
                                 <div class="bg-white w-56 shadow-md mx-auto p-2 mt-12 rounded-md text-gray-500 hidden text-base border border-gray-100  " uk-drop="mode: hover;pos: top-right">
-                              
+
                                     <ul class="space-y-1">
                                       <!-- <li>
                                           <a href="#" class="flex items-center px-3 py-2 hover:bg-gray-200 hover:text-gray-800 rounded-md ">
@@ -250,6 +251,7 @@
                                       <li>
                                         <hr class="-mx-2 my-2 ">
                                       </li> -->
+
                                       <li>
                                         <form method="POST" action="/delete" style="display: block;width:100%;text-align: left;">
                                             {% csrf_token %}
@@ -263,6 +265,7 @@
                                 
                                 </div>
                               </div>
+                            {% endif %}
                             </div>
     
                             <div uk-lightbox>
