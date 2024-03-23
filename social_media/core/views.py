@@ -215,6 +215,12 @@ def settings(request):
             location = request.POST["location"]
             phone_number = request.POST["phone_number"]
 
+            # Check phone number is exists?
+            if Profile.objects.filter(phone_number=phone_number).exists():
+                messages.info(
+                    request, 'Your number already used! Try another.')
+                return redirect("settings")
+
             user_profile.profileimg = image
             user_profile.bio = bio
             user_profile.location = location
@@ -226,6 +232,12 @@ def settings(request):
             bio = request.POST["bio"]
             location = request.POST["location"]
             phone_number = request.POST["phone_number"]
+
+            # Check phone number is exists?
+            if Profile.objects.filter(phone_number=phone_number).exists():
+                messages.info(
+                    request, 'Your number already used! Try another.')
+                return redirect("settings")
 
             user_profile.profileimg = image
             user_profile.bio = bio
@@ -240,8 +252,7 @@ def settings(request):
 
 def forget(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        phone_number = request.POST['phone_number']
 
         user = auth.authenticate(username=username, password=password)
 
@@ -270,6 +281,10 @@ def signup(request):
                 return redirect("signup")
             elif User.objects.filter(username=username).exists():
                 messages.info(request, "Username Is Taken")
+                return redirect("signup")
+            elif Profile.objects.filter(phone_number=phone_number).exists():
+                messages.info(
+                    request, 'Your number already used! Try another.')
                 return redirect("signup")
             else:
                 user = User.objects.create_user(

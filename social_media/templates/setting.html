@@ -44,6 +44,17 @@
                         <p></p>
                     </div>
                     <div class="bg-white rounded-md lg:shadow-lg shadow col-span-2">
+
+                        <div>
+                            <style type="text/css">
+                                h5 {
+                                    color: red;
+                                }
+                            </style>
+                            {% for message in messages %}
+                            <h5>{{message}}</h5>
+                            {% endfor %}
+                        </div>
                         
                         <form action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
