@@ -208,42 +208,44 @@ def settings(request):
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == "POST":
+        # Get passowrds
+        password = request.POST.get("password", False)
+        password_confirm = request.POST.get("password_confirm", False)
+
+        # Check matching passwords
+        if password != password_confirm:
+            messages.info(request, "Password Not Matching")
+            return redirect("settings")
+
+        # Check image non uploaded
         if request.FILES.get("image") == None:
             image = user_profile.profileimg
-            bio = request.POST["bio"]
-            location = request.POST["location"]
-            phone_number = request.POST["phone_number"]
-
-            # Check phone number is exists?
-            if Profile.objects.filter(phone_number=phone_number).exists():
-                messages.info(
-                    request, 'Your number already used! Try another.')
-                return redirect("settings")
-
-            user_profile.profileimg = image
-            user_profile.bio = bio
-            user_profile.location = location
-            user_profile.phone_number = phone_number
-            user_profile.save()
-
-        if request.FILES.get("image") != None:
+        else:
             image = request.FILES.get("image")
-            bio = request.POST["bio"]
-            location = request.POST["location"]
-            phone_number = request.POST["phone_number"]
 
-            # Check phone number is exists?
+        bio = request.POST["bio"]
+        location = request.POST["location"]
+        phone_number = request.POST["phone_number"]
+
+        # Check phone number is exists?
+        if Profile.objects.get(user=request.user).phone_number != phone_number:
             if Profile.objects.filter(phone_number=phone_number).exists():
                 messages.info(
                     request, 'Your number already used! Try another.')
                 return redirect("settings")
 
-            user_profile.profileimg = image
-            user_profile.bio = bio
-            user_profile.location = location
-            user_profile.phone_number = phone_number
-            user_profile.save()
+        user_profile.profileimg = image
+        user_profile.bio = bio
+        user_profile.location = location
+        user_profile.phone_number = phone_number
+        # Check password field
+        if password:
+            user = User.objects.get(username=request.user.username)
+            user.set_password(password)
+            user.save()
+        user_profile.save()
 
+        messages.info(request, "Changes is saved!")
         return redirect("settings")
 
     return render(request, "setting.html", {"user_profile": user_profile})
