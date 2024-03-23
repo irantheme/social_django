@@ -220,7 +220,7 @@ def settings(request):
         # Check image non uploaded
         if request.FILES.get("image") == None:
             image = user_profile.profileimg
-        else:
+        if request.FILES.get("image") != None:
             image = request.FILES.get("image")
 
         bio = request.POST["bio"]

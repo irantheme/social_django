@@ -24,9 +24,9 @@
                 <div class="header_inner">
                     <div class="left-side">
                         <!-- Logo -->
-                        <div id="logo" class=" uk-hidden@s">
-                            <a href="/">
-                                <!-- <b><h1 style="text-transform: uppercase;">Social Book</h1></b> -->
+                        <div class="hidden lg:block mr-4">
+                            <a href="home.html">
+                                <b><h1 style="text-transform: uppercase;">Social Book</h1></b>
                             </a>
                         </div>
 
@@ -37,7 +37,7 @@
                         <!-- <div class="header_search"> -->
 
                                 <div class="header_search" style="display: flex;">
-                                    <input type="text" name="username" placeholder="Search for username..">
+                                    <input type="text" name="username" placeholder="Search...">
                                     <button type="submit">
                                         <div class="icon-search">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -61,7 +61,7 @@
                     </div>
                     <div class="right-side lg:pr-4">
                         <!-- welcome user -->
-                        <a href="/profile/{{user.username}}" class="">
+                        <a href="/profile/{{user.username}}" class="hidden lg:block">
                             Welcome <b name="" class="">{{user.username}}&nbsp; &nbsp; &nbsp;</b>
                         </a>
 
