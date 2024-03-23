@@ -10,6 +10,7 @@ urlpatterns = [
     path("profile/<str:pk>", views.profile, name="profile"),
     path("like-post", views.like_post, name="like-post"),
     path("delete", views.delete, name="delete"),
+    path("forget", views.forget, name="forget"),
     path("signup", views.signup, name="signup"),
     path("signin", views.signin, name="signin"),
     path("logout", views.logout, name="logout"),
