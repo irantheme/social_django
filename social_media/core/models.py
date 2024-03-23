@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 import uuid
 from datetime import datetime
+from django.contrib.auth.models import User
 
 User = get_user_model()
 
@@ -15,6 +16,7 @@ class Profile(models.Model):
         upload_to="profile_images", default="blank-profile-picture.png"
     )
     location = models.CharField(max_length=100, blank=True)
+    phone_number = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
         return self.user.username

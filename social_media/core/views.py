@@ -213,20 +213,24 @@ def settings(request):
             image = user_profile.profileimg
             bio = request.POST["bio"]
             location = request.POST["location"]
+            phone_number = request.POST["phone_number"]
 
             user_profile.profileimg = image
             user_profile.bio = bio
             user_profile.location = location
+            user_profile.phone_number = phone_number
             user_profile.save()
 
         if request.FILES.get("image") != None:
             image = request.FILES.get("image")
             bio = request.POST["bio"]
             location = request.POST["location"]
+            phone_number = request.POST["phone_number"]
 
             user_profile.profileimg = image
             user_profile.bio = bio
             user_profile.location = location
+            user_profile.phone_number = phone_number
             user_profile.save()
 
         return redirect("settings")
@@ -239,6 +243,7 @@ def signup(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
+        phone_number = request.POST['phone_number']
         password = request.POST["password"]
         password2 = request.POST["password2"]
 
@@ -262,7 +267,7 @@ def signup(request):
                 # Create a profile object for the new user
                 user_model = User.objects.get(username=username)
                 new_profile = Profile.objects.create(
-                    user=user_model, id_user=user_model.id)
+                    user=user_model, id_user=user_model.id, phone_number=phone_number)
                 new_profile.save()
                 return redirect('settings')
         else:
