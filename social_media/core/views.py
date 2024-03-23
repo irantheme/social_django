@@ -209,8 +209,8 @@ def settings(request):
 
     if request.method == "POST":
         # Get passowrds
-        password = request.POST.get("password", False)
-        password_confirm = request.POST.get("password_confirm", False)
+        password = request.POST["password"]
+        password_confirm = request.POST["password_confirm"]
 
         # Check matching passwords
         if password != password_confirm:
