@@ -6,8 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Profile, Post, LikePost, FollowersCount
 from itertools import chain
 import random
-
-
+from core.utilities import Utilities
 # Create your views here.
 
 
@@ -252,16 +251,38 @@ def settings(request):
 
 def forget(request):
     if request.method == 'POST':
+        # Get phone number from user
         phone_number = request.POST['phone_number']
+        # Check phone number
+        if Profile.objects.filter(phone_number=phone_number).exists():
+            # Get user id from user profile
+            user_id = Profile.objects.filter(
+                phone_number=phone_number).first().id_user
+            # Get user and create password
+            user = User.objects.get(id=user_id)
+            util = Utilities()
+            # Create new password
+            new_password = util.create_password(8)
+            # Set new password
+            user.set_password(new_password)
+            user.save()
 
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            return redirect('/')
+            # Send password to user phone number
+            message = f'''
+            بازیابی رمز در شبکه اجتاعی
+            رمز جدید شما: {new_password}
+            '''
+            status = util.send_message(phone_number, messages)
+            if status == 200:
+                messages.info(
+                    request, 'New password sended to your phone number.')
+            else:
+                messages.info(
+                    request, 'Error: Message not sended! ' + status)
+            return redirect('forget')
         else:
-            messages.info(request, 'Credentials Invalid')
-            return redirect('signin')
+            messages.info(request, 'Your phone number is not found!')
+            return redirect('forget')
     else:
         return render(request, 'forget.html')
 
