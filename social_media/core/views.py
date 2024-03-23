@@ -271,13 +271,14 @@ def forget(request):
 
             # Send password to user phone number
             message = f'''
-            بازیابی رمز در شبکه اجتاعی
+            بازیابی رمز در شبکه اجتماعی ایران تم
             رمز جدید شما: {new_password}
             '''
-            status = util.send_message(phone_number, messages)
+            status = util.send_message(phone_number, message)
             if status == 200:
                 messages.info(
                     request, 'New password sended to your phone number.')
+                return redirect('forget')
             else:
                 messages.info(
                     request, 'Error: Message not sended! ' + status)
