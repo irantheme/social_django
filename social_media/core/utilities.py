@@ -9,7 +9,7 @@ class Utilities:
         '''Initialize'''
         self.charactors = '1234567890abcdefghijklmnopqrsvutwxyz!@#$%^&*'
         self.API_KEY = config.API_KEY
-        self.__URL = f'https://api.kavenegar.com/v1/{self.API_KEY}/sms/send.json'
+        self.__URL = f'https://api.kavenegar.com/v1/{self.API_KEY}/verify/lookup.json'
 
     def create_password(self, length):
         '''Create password simple'''
@@ -19,13 +19,14 @@ class Utilities:
             password += self.charactors[num]
         return password
 
-    def send_message(self, number, message):
+    def send_message(self, number, code):
         ''' Sending message to phone number with api key '''
         # Create format for send
         payload = {
             'receptor': number,
-            'message': message
+            'token': code,
+            'template': 'password'
         }
         # Send message
         response = requests.post(self.__URL, data=payload)
-        return response.status_code
+        return response

@@ -7,6 +7,7 @@ from .models import Profile, Post, LikePost, FollowersCount
 from itertools import chain
 import random
 from core.utilities import Utilities
+# from requests.models import Response
 # Create your views here.
 
 
@@ -270,18 +271,15 @@ def forget(request):
             user.save()
 
             # Send password to user phone number
-            message = f'''
-            بازیابی رمز در شبکه اجتماعی ایران تم
-            رمز جدید شما: {new_password}
-            '''
-            status = util.send_message(phone_number, message)
-            if status == 200:
+            res = util.send_message(phone_number, new_password)
+            res = dict(res.json())
+            if res['return']['status'] == 200:
                 messages.info(
                     request, 'New password sended to your phone number.')
                 return redirect('forget')
             else:
                 messages.info(
-                    request, 'Error: Message not sended! ' + status)
+                    request, 'Error: Message not sended! ' + res['return']['statustext'])
             return redirect('forget')
         else:
             messages.info(request, 'Your phone number is not found!')
